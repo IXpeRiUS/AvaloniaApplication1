@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AvaloniaApplication1.ViewModels
 {
     public partial class NewSkia : Control
@@ -24,19 +25,37 @@ namespace AvaloniaApplication1.ViewModels
 
         class NewCustomDraw : ICustomDrawOperation
         {
+            IList<Device> devices = new List<Device>();
+
             Random random = new Random();
             public NewCustomDraw(Rect bounds)
             {
                 Bounds = bounds;
+            
+                for (int i = 0; i < 100; i++)
+                {
+                    for (int j = 0; j < 100; j++)
+                    {
+                        var device = new Device()
+                        {
+                            Position = new Point(10 + i * 10, 10 + j * 10),
+                            Color = new SKColor((byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255))
+                        };
+
+                        devices.Add(device);
+                    }                    
+                }                
             }
+
             public Rect Bounds { get; }
+            Rect ICustomDrawOperation.Bounds { get; }
+
             public void Dispose()
             {
                 throw new NotImplementedException();
             }
             public bool Equals(ICustomDrawOperation other) => false;
             public bool HitTest(Point p) => false;
-           
 
             public void Render(ImmediateDrawingContext context)
             {
@@ -45,15 +64,12 @@ namespace AvaloniaApplication1.ViewModels
                 using var lease = leaseFeature.Lease();
                 var canvas = lease.SkCanvas;
                 canvas.Save();
-                //разноцветный квадратик!
-                var color = new SKColor((byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
-                using (var rect = new SKPaint())
+
+                foreach (var device in this.devices)
                 {
-                    rect.Color = color;
-                    rect.Style = SKPaintStyle.Stroke;
-                    rect.StrokeWidth = 10;
-                    canvas.DrawRect(random.Next(10, 700), random.Next(10, 500), 100, 100, rect);
+                    device.Draw(canvas);
                 }
+
                 canvas.Restore();
             }
         }
