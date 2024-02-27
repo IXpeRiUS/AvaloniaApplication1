@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace AvaloniaApplication1.ViewModels
 {
-    public partial class NewSkia : Control
+    public partial class NewSkia : UserControl
     {
         IList<Device> devices = new List<Device>();
         

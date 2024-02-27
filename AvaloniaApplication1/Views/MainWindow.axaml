@@ -16,24 +16,14 @@
 		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
-	<!--<Panel Background="AntiqueWhite"
-			   HorizontalAlignment="Left"
-			   VerticalAlignment="Center">
-			<views:SkiaCanvas Height="200"
-							  Width="200">
-			</views:SkiaCanvas>
-			
-		</Panel>-->
-	<!--<Panel HorizontalAlignment="Stretch"
-			   VerticalAlignment="Stretch">
-			-->
-	<!--<Button Content="1000 rect" Command="{Binding DrawRandomRect}"/>-->
-	<!--
-			   <vm:NewSkia HorizontalAlignment="Stretch"
-						   VerticalAlignment="Stretch">
-			   </vm:NewSkia>		   
-	   </Panel>-->
-	<vm:NewSkia HorizontalAlignment="Stretch"
-				VerticalAlignment="Stretch">
-	</vm:NewSkia>
+
+	<LayoutTransformControl PointerWheelChanged="OnWheel">
+	
+			<vm:NewSkia HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Background = "Transparent">
+			</vm:NewSkia>
+		
+	</LayoutTransformControl>
+	
 </Window>
